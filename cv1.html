@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quizz</title>
+
+</head>
+<body>
+  <div class="container">
+    <h1>Quizz</h1>
+    <div class="question">
+      <p id="question"></p>
+      <ul id="reponses">
+        <li><input type="radio" id="rep1" name="reponse"><label for="rep1"></label></li>
+        <li><input type="radio" id="rep2" name="reponse"><label for="rep2"></label></li>
+        <li><input type="radio" id="rep3" name="reponse"><label for="rep3"></label></li>
+        <li><input type="radio" id="rep4" name="reponse"><label for="rep4"></label></li>
+      </ul>
+    </div>
+    <div class="chrono">
+      <p id="temps">00:00</p>
+    </div>
+    <button id="submit">Soumettre</button>
+    <button id="restart">Recommencer</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+.container {
+  width: 800px;
+  margin: 40px auto;
+  background-color: #FFFFFF;
+  padding: 20px;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+#question {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#reponses {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#reponses li {
+  margin-bottom: 10px;
+}
+
+#reponses input[type="radio"] {
+  margin-right: 10px;
+}
+
+.chrono {
+  margin-bottom: 20px;
+}
+
+#temps {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+</style>
+
+
+
+</html>
+<script>
+// Tableau de questions
+const questions = [
+  {
+    question: "Quelle est la capitale de la France ?",
+    reponses: ["Paris", "Lyon", "Marseille", "Bordeaux"],
+    bonneReponse: 0
+  },
+  {
+    question: "Quel est le plus grand plan d'eau du monde ?",
+    reponses: ["Océan Pacifique", "Océan Atlantique", "Mer Méditerranée", "Lac Baïkal"],
+    bonneReponse: 0
+  },
+  {
+    question: "Qui est l'auteur du roman 'Les Misérables' ?",
+    reponses: ["Victor Hugo", "Gustave Flaubert", "Émile Zola", "Honore de Balzac"],
+    bonneReponse: 0
+  }
+];
+
+// Variable pour stocker la question actuelle
+let questionActuelle = 0;
+
+// Variable pour stocker le temps
+let temps = 0;
+
+// Variable pour stocker la bonne réponse
+let bonneReponse = 0;
+
+// Fonction pour afficher la question actuelle
+function afficherQuestion() {
+  const questionElement = document.getElementById("question");
+  const reponsesElement = document.getElementById("reponses");
+  const tempsElement = document.getElementById("temps");
+
+  questionElement.textContent = questions[questionActuelle].question;
+  reponsesElement.innerHTML = "";
+  questions[questionActuelle].reponses.forEach((reponse, index) => {
+    const li = document.createElement("li");
+    const input = document.createElement("input");
+    const label = document.createElement("label");
+
+    input.type = "radio";
+    (cv.html) = `rep${index + 1}`;
+    input.name = "reponse";
+    label.textContent = reponse;
+    label.htmlFor = `rep${index + 1}`;
+
+    li.appendChild(input);
+    li.appendChild(label);
+    reponsesElement.appendChild(li);
+  })}
+</script>

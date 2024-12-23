@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quizz</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="quizz-container">
+    <h1>Quizz</h1>
+    <div class="question-container">
+      <p id="question"></p>
+      <div class="choices-container">
+        <button id="choice1" class="choice"></button>
+        <button id="choice2" class="choice"></button>
+        <button id="choice3" class="choice"></button>
+        <button id="choice4" class="choice"></button>
+      </div>
+    </div>
+    <div class="navigation-container">
+      <button id="prev" class="nav-button">Précédent</button>
+      <button id="next" class="nav-button">Suivant</button>
+    </div>
+    <div class="timer-container">
+      <p id="timer">Temps restant : 60 secondes</p>
+    </div>
+    <div class="result-container">
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script >
+    const questions = [
+  {
+    question: "Quelle est la capitale de la France ?",
+    choices: ["Paris", "Lyon", "Marseille", "Bordeaux"],
+    answer: 0
+  },
+  {
+    question: "Qui est le créateur de la série Harry Potter ?",
+    choices: ["J.K. Rowling", "J.R.R. Tolkien", "Philip Pullman", "C.S. Lewis"],
+    answer: 0
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timer = 60;
+
+document.getElementById("question").innerHTML = questions[currentQuestion].question;
+
+for (let i = 0; i < questions[currentQuestion].choices.length; i++) {
+  document.getElementById("choice" + (i + 1)).innerHTML = questions[currentQuestion].choices[i];
+}
+
+document.getElementById("next").addEventListener("click", function() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+
+currentQuestion++;
+document.getElementById("question").innerHTML = questions[currentQuestion].question;
+for (let i = 0; i < questions[currentQuestion].choices.length; i++) {
+  document.getElementById("choice" + (i + 1)).innerHTML = questions[currentQuestion].choices[i];
+}
+} else {
+  alert("Vous avez terminé le quizz !");
+  document.getElementById("result").innerHTML = "Votre score est de " + score + " sur " + questions.length;
+}
+});
+
+document.getElementById("prev").addEventListener("click", function() {
+if (currentQuestion > 0) {
+  currentQuestion--;
+  document.getElementById("question").innerHTML = questions[currentQuestion].question;
+  for (let i = 0; i < questions[currentQuestion].choices.length; i++) {
+    document.getElementById("choice" + (i + 1)).innerHTML = questions[currentQuestion].choices[i];
+  }
+}
+});
+
+for (let i = 0; i < questions[currentQuestion].choices.length; i++) {
+  document.getElementById("choice" + (i + 1)).addEventListener("click", function() {
+    if (i === questions[currentQuestion].answer) {
+      score++;
+      alert("Bonne réponse !");
+    } else {
+      alert("Mauvaise réponse !");
+    }
+  });
+}
+
+setInterval(function() {
+  timer--;
+  document.getElementById("timer").innerHTML = "Temps restant : " + timer + " secondes";
+  if (timer <= 0) {
+    alert("Temps écoulé !");
+    document.getElementById("result").innerHTML = "Votre score est de " + score + " sur " + questions.length;
+  }
+}, 1000);
+
+  </script>
+</body>
+</html>
+
+<style>
+.quizz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 40px auto;
+  text-align: center;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question-container {
+  margin-bottom: 20px;
+}
+
+.choices-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.choice {
+  width: 40%;
+  height: 40px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.choice:hover {
+  background-color: #3e8e41;
+}
+
+.navigation-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-button {
+  width: 40%;
+  height: 40px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  background-color: #3e8e41;
+}
+
+.timer-container {
+  margin-top: 20px;
+}
+
+#timer {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.result-container {
+  margin-top: 20px;
+}
+
+#result {
+  font-size: 24px;
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .quizz-container {
+    width: 90%;
+  }
+  .choice {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .quizz-container {
+    width: 95%;
+  }
+  .choice {
+    width: 90%;
+  }
+}
+
+
+</style>

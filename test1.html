@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duel de Programmation</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        #editor {
+            height: 400px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #272822;
+        }
+        button, select {
+            padding: 10px 20px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover, select:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body>
+    <h1>Duel de Programmation</h1>
+    <select id="language">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+        <option value="mysql">MySQL</option>
+        <option value="kotlin">Kotlin</option>
+    </select>
+    <button id="submit-code">Soumettre le Code</button>
+    <div id="editor"></div>
+    <div id="result"></div>
+
+    <script>
+
+
+    // Configurez l'observateu
+document.addEventListener('DOMContentLoaded', () => {
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+            var editor = monaco.editor.create(document.getElementById('editor'), {
+                value: '// Écrivez votre code ici',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
+            document.getElementById('submit-code').addEventListener('click', function() {
+                const code = editor.getValue();
+                const lang = document.getElementById("language").value;
+
+                // Appel à JDoodle API
+                fetch('https://api.jdoodle.com/v1/execute',  {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        script: code,
+                        language: lang,
+                        versionIndex: "0", // Dernière version
+                       clientId: '80c976f562001eed33e09e538223eaa9',
+            clientSecret: 'f613ba8c38a2c7d91301a1aa4fce57c319d85ea53f8814dfd22e2b85a92f810'
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('result').innerText = "Erreur : " + data.error;
+                    } else {
+                        document.getElementById('result').innerText = "Résultat : " + data.output;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    document.getElementById('result').innerText = "Erreur d'exécution : " + error.message;
+                });
+            });
+        });
+});
+    </script>
+</body>
+</html>

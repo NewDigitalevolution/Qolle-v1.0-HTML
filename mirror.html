@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monaco Editor avec Reconnaissance Automatique du Langage</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        #editor {
+            height: 800px; /* Hauteur de l'éditeur */
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #272822; /* Couleur de fond */
+        }
+        button, select {
+            padding: 10px 20px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover, select:hover {
+            background-color: #0056b3;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script>
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+            // Initialisation de Monaco Editor
+            var editor = monaco.editor.create(document.getElementById('editor'), {
+                value: '// Écrivez votre code ici',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
+            // Fonction pour changer le langage
+            window.changeLanguage = function() {
+                var lang = document.getElementById("language").value;
+                monaco.editor.setModelLanguage(editor.getModel(), lang); // Changer le langage
+                editor.setValue(getDefaultCode(lang)); // Met à jour le contenu avec du code par défaut
+            };
+
+            // Fonction pour obtenir le code par défaut selon le langage
+            function getDefaultCode(lang) {
+                switch(lang) {
+                    case 'javascript':
+                        return '// Exemple de JavaScript\nconsole.log("Hello, World!");';
+                    case 'python':
+                        return '# Exemple de Python\nprint("Hello, World!")';
+                    case 'java':
+                        return '// Exemple de Java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}';
+                    case 'cpp':
+                        return '// Exemple de C++\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << "Hello, World!";\n    return 0;\n}';
+                    case 'csharp':
+                        return '// Exemple de C#\nusing System;\nclass Program {\n    static void Main() {\n        Console.WriteLine("Hello, World!");\n    }\n}';
+                    case 'html':
+                        return '<!-- Exemple de HTML -->\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Hello World</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n</body>\n</html>';
+                    case 'css':
+                        return '/* Exemple de CSS */\nbody {\n    background-color: #f0f0f0;\n}';
+                    case 'php':
+                        return '<?php\n// Exemple de PHP\necho "Hello, World!";\n?>';
+                    case 'ruby':
+                        return '# Exemple de Ruby\nputs "Hello, World!"';
+                    case 'go':
+                        return '// Exemple de Go\npackage main\nimport "fmt"\nfunc main() {\n    fmt.Println("Hello, World!")\n}';
+                    case 'shell':
+                        return '# Exemple de Shell\necho "Hello, World!"';
+                    case 'markdown':
+                        return '# Exemple de Markdown\n\nHello, World!';
+                    case 'sql':
+                        return '-- Exemple de SQL\nSELECT "Hello, World!" AS greeting;';
+                    case 'yaml':
+                        return '# Exemple de YAML\nmessage: "Hello, World!"';
+                    case 'powershell':
+                        return '# Exemple de PowerShell\nWrite-Host "Hello, World!"';
+                    case 'json':
+                        return '{ "message": "Hello, World!" }';
+                    case 'latex':
+                        return '% Exemple de LaTeX\n\\documentclass{article}\n\\begin{document}\nHello, World!\n\\end{document}';
+                    case 'xml':
+                        return '<!-- Exemple de XML -->\n<message>Hello, World!</message>';
+                    case 'flutter':
+                        return '// Exemple de Flutter\nimport "package:flutter/material.dart";\n\nvoid main() {\n  runApp(MyApp());\n}\n\nclass MyApp extends StatelessWidget {\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      home: Scaffold(\n        appBar: AppBar(\n          title: Text("Hello, World!"),\n        ),\n        body: Center(\n          child: Text("Hello, World!"),\n        ),\n      ),\n    );\n  }\n}';
+                    case 'kotlin':
+                        return '// Exemple de Kotlin\nfun main() {\n    println("Hello, World!")\n}';
+                    case 'psql':
+                        return '-- Exemple de PSQL\nSELECT \'Hello, World!\';';
+                    case 'reactnative':
+                        return '// Exemple de React Native\nimport React from "react";\nimport { Text, View } from "react-native";\n\nconst App = () => {\n  return (\n    <View>\n      <Text>Hello, World!</Text>\n    </View>\n  );\n};\n\nexport default App;';
+                    case 'mysql':
+                        return '-- Exemple de MySQL\nSELECT "Hello, World!" AS greeting;';
+                    case 'angular':
+                        return '// Exemple de Angular\nimport { Component } from "@angular/core";\n\n@Component({\n  selector: "app-root",\n  template: `<h1>Hello, World!</h1>`\n})\nexport class AppComponent {}';
+                    default:
+                        return '// Écrivez votre code ici';
+                }
+            }
+
+            // Fonction pour simuler la compilation
+            window.compileCode = function() {
+                const code = editor.getValue();
+                alert("Code prêt à être compilé :\n" + code);
+                console.log("Code à compiler :", code);
+            };
+
+            // Fonction pour sauvegarder le code
+            window.saveCode = function() {
+                const code = editor.getValue();
+                console.log("Code sauvegardé :", code);
+                alert("Code sauvegardé dans la console !");
+            };
+        });
+
+
+     $('#challenge-form').submit(function(event) {
+    event.preventDefault();
+    
+    const code = getCode(); // Récupérez le code de Monaco Editor
+    const title = $('#challenge-title').val();
+    const description = $('#challenge-description').val();
+
+    // Appel à l'API pour exécuter le code
+    fetch('https://api.jdoodle.com/v1/execute', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            script: code,
+            language: 'javascript', // Changez selon le langage
+            clientId: 'Y80c976f562001eed33e09e538223eaa9',
+            clientSecret: 'f613ba8c38a2c7d91301a1aa4fce57c319d85ea53f8814dfd22e2b85a92f810'
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert("Erreur : " + data.error);
+        } else {
+            alert("Résultat : " + data.output);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert("Erreur d'exécution : " + error.message);
+    });
+});
+    </script>
+</head>
+<body>
+    <h1>Monaco Editor avec Reconnaissance Automatique du Langage</h1>
+    <select id="language" onchange="changeLanguage()">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+        <option value="csharp">C#</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="php">PHP</option>
+        <option value="ruby">Ruby</option>
+        <option value="go">Go</option>
+        <option value="shell">Shell</option>
+        <option value="markdown">Markdown</option>
+        <option value="sql">SQL</option>
+        <option value="yaml">YAML</option>
+        <option value="powershell">PowerShell</option>
+        <option value="json">JSON</option>
+        <option value="latex">LaTeX</option>
+        <option value="xml">XML</option>
+        <option value="flutter">Flutter</option>
+        <option value="kotlin">Kotlin</option>
+        <option value="psql">PostgreSQL</option>
+        <option value="reactnative">React Native</option>
+        <option value="mysql">MySQL</option>
+        <option value="angular">Angular</option>
+        <option value="plaintext">Texte brut</option>
+    </select>
+    <button onclick="saveCode()">Enregistrer le Code</button>
+    <button onclick="compileCode()">Compiler le Code</button>
+    <div id="editor"></div>
+</body>
+</html>

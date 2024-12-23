@@ -1,0 +1,110 @@
+HTML :
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Liste des utilisateurs</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="container">
+ <h1>Liste des utilisateurs</h1>
+ <ul class="utilisateurs">
+ <li>
+ <img src="photo1.jpg" alt="Photo de l'utilisateur 1">
+ <div class="infos">
+ <h2>Nom de l'utilisateur 1</h2>
+ <p>Status : En ligne</p>
+ </div>
+ </li>
+ <li>
+ <img src="photo2.jpg" alt="Photo de l'utilisateur 2">
+ <div class="infos">
+ <h2>Nom de l'utilisateur 2</h2>
+ <p>Status : Hors ligne</p>
+ </div>
+ </li>
+ <li>
+ <img src="photo3.jpg" alt="Photo de l'utilisateur 3">
+ <div class="infos">
+ <h2>Nom de l'utilisateur 3</h2>
+ <p>Status : En ligne</p>
+ </div>
+ </li>
+ </ul>
+ </div>
+</body>
+</html>
+
+
+<style>
+body {
+ font-family: Arial, sans-serif;
+ background-color: #f7f7f7;
+}
+
+.container {
+ max-width: 400px;
+ margin: 40px auto;
+ padding: 20px;
+ background-color: #fff;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.utilisateurs {
+ list-style: none;
+ padding: 0;
+ margin: 0;
+}
+
+.utilisateurs li {
+ display: flex;
+ align-items: center;
+ padding: 10px;
+ border-bottom: 1px solid #ccc;
+}
+
+.utilisateurs li img {
+ width: 50px;
+ height: 50px;
+ border-radius: 50%;
+ margin-right: 10px;
+}
+
+.infos {
+ flex-grow: 1;
+}
+
+.infos h2 {
+ font-size: 16px;
+ margin-bottom: 5px;
+}
+
+.infos p {
+ font-size: 14px;
+ color: #666;
+}
+
+/* Media queries pour la responsivité */
+
+@media (max-width: 768px) {
+ .container {
+ max-width: 300px;
+ }
+}
+
+@media (max-width: 480px) {
+ .container {
+ max-width: 200px;
+ }
+ .utilisateurs li {
+ flex-direction: column;
+ align-items: flex-start;
+ }
+ .utilisateurs li img {
+ width: 30px;
+ height: 30px;
+ }
+}
+</style>
